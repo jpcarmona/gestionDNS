@@ -79,14 +79,14 @@ def comprobar_DNS_A(file_dns,nombre,tipo=None):
 ## En tipo A añade regitro inverso.
 def añadir_registroDNS(file_dns,file_dns_inverso,var1,var2,tipo,dominio=None):			
 	if tipo=='-dir':
-		print('Añadir regitro tipo A: \n \t nombre: "{}" --> IP: "{}"'.format(var1,var2))
+		print('Añadir regitro tipo A:\n\t"{}\t\tIN\tA\t{}"'.format(var1,var2))
 		linea='{}\t\tIN\tA\t{} ; Añadido con GestionDNS.py\n'.format(var1,var2)
 		ip_var2=var2.split('.')[3]
 		linea_inversa='{}\tIN\tPTR\t{}.{} ; Añadido con GestionDNS.py\n'.format(ip_var2,var1,dominio)
 		escribir_zonadirecta=True
 	elif tipo=='-alias':
 		if comprobar_DNS_A(file_dns,var2,tipo):
-			print('Añadir regitro tipo CNAME: \n \t alias: "{}" --> nombre: "{}"'.format(var1,var2))
+			print('Añadir regitro tipo CNAME:\n\t"{}\t\tIN\tCNAME\t{}"'.format(var1,var2))
 			linea='{}\t\tIN\tCNAME\t{} ; Añadido con GestionDNS.py\n'.format(var1,var2)
 			escribir_zonadirecta=True
 		else:
@@ -116,7 +116,7 @@ def eliminar_registroDNS(file_dns,file_dns_inverso,var1,dominio):
 		if parametros[0]!=var1:
 			fichero.write(linea)
 		else:
-			print('Borrando registro "{}" en zona directa.'.format(var1))
+			print('Borrando registro "{}\tIN\t{}\t{}.{}" en zona directa.'.format(parametros[0],parametros[2],parametros[3],parametros[4]))
 			if parametros[2]=='A':
 				eliminar_inverso=True
 	fichero.close()
@@ -130,7 +130,7 @@ def eliminar_registroDNS(file_dns,file_dns_inverso,var1,dominio):
 		for linea in lineas:
 			parametros=' '.join(linea.split()).replace(' ',':').split(':')
 			if len(parametros)>3 and parametros[3]==var1+'.'+dominio:
-				print('Borrando registro PTR "{}.{}" en zona inversa.'.format(var1,dominio))
+				print('Borrando registro "{}\tIN\tPTR\t{}" en zona inversa.'.format(parametros[0],parametros[3]))
 			else:
 				fichero.write(linea)				
 		fichero.close()
