@@ -4,9 +4,10 @@ import random, socket, struct
 # para verificar que existe fichero
 import os.path
 
-#file_dns='/var/cache/bind/ext-juanpe.gonzalonazareno.org'
-file_dns='prueba-ext'
-file_dns_inverso='prueba-inv'
+file_dns='/var/cache/bind/ext-juanpe.gonzalonazareno.org'
+file_dns_inverso_int='/var/cache/bind/int-200.22.172.in-addr.arpa'
+#file_dns='prueba-ext'
+#file_dns_inverso='prueba-inv'
 
 ## Para el caso de gestionar el DNS interno
 #file_dns_int='/var/cache/bind/int-juanpe.gonzalonazareno.org'
@@ -94,11 +95,12 @@ def añadir_registroDNS(file_dns,file_dns_inverso,var1,var2,tipo,dominio=None):
 	if escribir_zonadirecta:
 		with open(file_dns,'a') as fichero:
 			fichero.write(linea)
+		subprocess.call(['rndc','reload'])
 	if dominio!=None:
 		print('Añadir regitro tipo PTR: \n \t IP: "{}" --> nombre: "{}.{}"'.format(var2,var1,dominio))
 		with open(file_dns_inverso,'a') as fichero:
 			fichero.write(linea_inversa)
-
+		subprocess.call(['rndc','reload'])
 ##
 
 ## Eliminar registros
@@ -118,6 +120,7 @@ def eliminar_registroDNS(file_dns,file_dns_inverso,var1,dominio):
 			if parametros[2]=='A':
 				eliminar_inverso=True
 	fichero.close()
+	subprocess.call(['rndc','reload'])
 	## Eliminar entrada en zona inversa si es registro tipo A
 	if eliminar_inverso:
 		fichero = open(file_dns_inverso,'r')
@@ -131,6 +134,7 @@ def eliminar_registroDNS(file_dns,file_dns_inverso,var1,dominio):
 			else:
 				fichero.write(linea)				
 		fichero.close()
+		subprocess.call(['rndc','reload'])
 ##
 
 ## accion debe ser o "-a" o "-b"
