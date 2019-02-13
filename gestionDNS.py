@@ -97,7 +97,7 @@ def añadir_registroDNS(file_dns,file_dns_inverso,var1,var2,tipo,dominio=None):
 			fichero.write(linea)
 		subprocess.call(['rndc','reload'])
 	if dominio!=None:
-		print('Añadir regitro tipo PTR: \n \t IP: "{}" --> nombre: "{}.{}"'.format(var2,var1,dominio))
+		print('Añadir regitro tipo PTR:\n\t"{}\t\tIN\tPTR\t{}.{}"'.format(var2,var1,dominio))
 		with open(file_dns_inverso,'a') as fichero:
 			fichero.write(linea_inversa)
 		subprocess.call(['rndc','reload'])
