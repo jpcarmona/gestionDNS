@@ -116,7 +116,7 @@ def eliminar_registroDNS(file_dns,file_dns_inverso,var1,dominio):
 		if parametros[0]!=var1:
 			fichero.write(linea)
 		else:
-			print('Borrando registro "{}\tIN\t{}\t{}.{}" en zona directa.'.format(parametros[0],parametros[2],parametros[3],parametros[4]))
+			print('Borrando registro "{}\tIN\t{}\t{}" en zona directa.'.format(parametros[0],parametros[2],parametros[3]))
 			if parametros[2]=='A':
 				eliminar_inverso=True
 	fichero.close()
