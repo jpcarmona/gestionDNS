@@ -5,7 +5,7 @@ import random, socket, struct
 import os.path
 
 file_dns='/var/cache/bind/ext-juanpe.gonzalonazareno.org'
-file_dns_inverso_int='/var/cache/bind/int-200.22.172.in-addr.arpa'
+file_dns_inverso='/var/cache/bind/int-200.22.172.in-addr.arpa'
 #file_dns='prueba-ext'
 #file_dns_inverso='prueba-inv'
 
